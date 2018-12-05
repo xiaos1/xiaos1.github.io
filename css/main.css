@@ -407,6 +407,7 @@ table {
   font-size: 14px;
   table-layout: fixed;
   word-wrap: break-all;
+  word-break: break-all;
 }
 table>tbody>tr:nth-of-type(odd) {
   background-color: #f9f9f9;
@@ -1823,7 +1824,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff9465;
+  background: #c9ffc9;
 }
 .links-of-blogroll {
   font-size: 13px;

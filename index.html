@@ -364,21 +364,168 @@ CMake作为一门语言, 学习CMake的时候, 会有坑. 比如某依赖在环�
 
 
 中间件服务列表
-lang    rtt    server    port    framework    client    server    model    私有部署客户    公有云客户
-文件分类1.0    python    等嘉文最后测一遍补上    139.196.88.231    4445    caffe    ThriftMiddleware    /situ/xiaos-forTest/RPC-PYserver/server3.py    discarded         
-ocr1.0（通用）    python        139.196.88.231    4447    tf+pytorch    ThriftMiddleware    /situ/tianhao/ocr/CHINESE-OCR/ocrModel.py    ocr/        
-ocr2.0（东风）    python        139.196.88.231    4499    tf    ThriftMiddleware    /situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py    ctpn/    东风    
-ocr3.0（东风）    python        139.196.88.231    4499    tf    ThriftMiddleware    /situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py    ctpn/    东风    
-文件分类2.0    python        139.196.88.231    4498    tf    ThriftMiddleware    /situ/xiaos-forTest/project-19/ImageCategory2.py    doc19/        
-文件分类3.0 (others)    python        139.196.88.231    4500    tf    ThriftMiddleware    /situ/wendong/Yolo3_k_a/others.py    yolo3/    东风    
-表情识别    python        139.196.88.231    4446    caffe    ThriftMiddleware    /situ/EmoRServer/emoRServer.py    ../x        
-人脸抠图    python        47.100.27.180:80    4497    caffe    ThriftMiddleware    /root/FacePhotoServer/FacePhotoServer.py    ./model    中银、长安新生    
-人脸抠图(宝马)    python        47.100.27.180:80    4444    caffe    ThriftMiddleware    /root/FacePhotoBMWServer/FacePhotoBMWServer.py    ./model    宝马    
-二维码    java            -                        
-姿态识别    cpp        47.100.27.180:80    4989    caffe    ThriftMiddleware    /root/poseServer/server/PoseServer    ../models        
-高兴程度    python        139.196.88.231    4448    Caffe    ThriftMiddleware    /situ/xiaos-forTest/happy_detection/happyServer.py    ./model        
-人脸抠图(General)    cpp        47.100.27.180:80    4496    caffe    ThriftMiddleware    /root/general_face_cxx    ./model        
-</code></pre>
+</code></pre><table class="table">
+<thead>
+<tr>
+<th style="text-align:left">service</th>
+<th style="text-align:left">lang</th>
+<th style="text-align:center">server</th>
+<th style="text-align:center">port</th>
+<th style="text-align:left">framework</th>
+<th style="text-align:right">client</th>
+<th style="text-align:left">server</th>
+<th style="text-align:left">model</th>
+<th style="text-align:right">私有部署客户   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">文件分类1.0</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4445</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/xiaos-forTest/RPC-PYserver/server3.py</td>
+<td style="text-align:left">discarded</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">ocr1.0（通用）</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4447</td>
+<td style="text-align:left">tf+pytorch</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/tianhao/ocr/CHINESE-OCR/ocrModel.py</td>
+<td style="text-align:left">ocr/</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">ocr2.0（东风）</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4499</td>
+<td style="text-align:left">tf</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py</td>
+<td style="text-align:left">ctpn/</td>
+<td style="text-align:right">东风</td>
+</tr>
+<tr>
+<td style="text-align:left">ocr3.0（东风）</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4499</td>
+<td style="text-align:left">tf</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py</td>
+<td style="text-align:left">ctpn/</td>
+<td style="text-align:right">东风</td>
+</tr>
+<tr>
+<td style="text-align:left">文件分类2.0</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4498</td>
+<td style="text-align:left">tf</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/xiaos-forTest/project-19/ImageCategory2.py</td>
+<td style="text-align:left">doc19/</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">文件分类3.0 (others)</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4500</td>
+<td style="text-align:left">tf</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/wendong/Yolo3_k_a/others.py</td>
+<td style="text-align:left">yolo3/</td>
+<td style="text-align:right">东风</td>
+</tr>
+<tr>
+<td style="text-align:left">表情识别</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4446</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/EmoRServer/emoRServer.py</td>
+<td style="text-align:left">../x</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">人脸抠图</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">47.100.27.180:80</td>
+<td style="text-align:center">4497</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/root/FacePhotoServer/FacePhotoServer.py</td>
+<td style="text-align:left">./model</td>
+<td style="text-align:right">中银、长安新生</td>
+</tr>
+<tr>
+<td style="text-align:left">人脸抠图(宝马)</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">47.100.27.180:80</td>
+<td style="text-align:center">4444</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/root/FacePhotoBMWServer/FacePhotoBMWServer.py</td>
+<td style="text-align:left">./model</td>
+<td style="text-align:right">宝马</td>
+</tr>
+<tr>
+<td style="text-align:left">二维码</td>
+<td style="text-align:left">java</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center"></td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">姿态识别</td>
+<td style="text-align:left">cpp</td>
+<td style="text-align:center">47.100.27.180:80</td>
+<td style="text-align:center">4989</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/root/poseServer/server/PoseServer</td>
+<td style="text-align:left">../models</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">高兴程度</td>
+<td style="text-align:left">python</td>
+<td style="text-align:center">139.196.88.231</td>
+<td style="text-align:center">4448</td>
+<td style="text-align:left">Caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/situ/xiaos-forTest/happy_detection/happyServer.py</td>
+<td style="text-align:left">./model</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">人脸抠图(General)</td>
+<td style="text-align:left">cpp</td>
+<td style="text-align:center">47.100.27.180:80</td>
+<td style="text-align:center">4496</td>
+<td style="text-align:left">caffe</td>
+<td style="text-align:right">ThriftMiddleware</td>
+<td style="text-align:left">/root/general_face_cxx</td>
+<td style="text-align:left">./model</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+
+
           
         
       
