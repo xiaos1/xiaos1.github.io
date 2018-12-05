@@ -291,7 +291,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/05/一篇感悟/" itemprop="url">一篇感悟</a></h2>
+                <a class="post-title-link" href="/2018/12/05/一篇感悟/" itemprop="url">一篇记录</a></h2>
         
 
         <div class="post-meta">
@@ -343,7 +343,42 @@
       
         
           
-            
+            <pre><code>最近学习的新东西：CMake, 
+最近使用的但不是新的：cpp编译命令, thrift python cpp java互接,
+Main work sections: 中间件, 中银\东风部署, 接口文档, 图片压缩, OpenApi, 
+
+中间件 --&gt; 接入了 9 个算法模型, 分别是文件分类I(19分类)、文件分类II(21分类, 有“其他”类别, 返回值有how top option)、通用ocr识别、东风ocr识别(合同编号 &amp; 车辆识别码专用)、表情识别、姿态识别(cpp)、身份证人脸抠图、通用人脸抠图(cpp)、表情程度识别.
+
+部署 --&gt; 远程部署, 东风服务器部署经验成熟, 测试服务器10.8.17.22和10.8.17.24目录/dev/situ, 生产服务器10.8.8.73和10.8.8.74目录/root/situ. 目前东风服务器的所有模型都是在python3.6.5 + tensorflow1.10 + gpu环境下运行的, 部署注意事项为python3 -m compileall -b . 中银生产服务器有四台, 使用的是cpu虚拟机, 他们自己h5做镜像的, 目前的问题有图片缓存未清理，运行时间长了磁盘满后出现resin宕机, 须尽快处理.
+
+接口文档 --&gt; 接口文档欠缺规范性. 
+
+图片压缩 --&gt; 采用了这个非常高逼格的函数, 使得图片压缩得又快又准.
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static String resizeImageTo30K(String base64Img) &#123;</span><br><span class="line">   try &#123;</span><br><span class="line">       BufferedImage src = base64String2BufferedImage(base64Img);</span><br><span class="line">       BufferedImage output = Thumbnails.of(src).size(240, 320).asBufferedImage();</span><br><span class="line">       String base64 = imageToBase64(output);</span><br><span class="line">       while (base64.length() - base64.length() / 8 * 2 &gt; 30000) &#123;</span><br><span class="line">           output = Thumbnails.of(output).scale(0.9f).asBufferedImage();</span><br><span class="line">           base64 = imageToBase64(output);</span><br><span class="line">       &#125;</span><br><span class="line">       return imageToBase64(output);</span><br><span class="line">   &#125; catch (Exception e) &#123;</span><br><span class="line">       return base64Img;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+OpenApi --&gt; 把所有的中间件接口接入OpenApi是比较常规且重复的工作. 后面会优化为中间件接口交给运维端, OpenApi系统接运维端.
+
+CMake作为一门语言, 学习CMake的时候, 会有坑. 比如某依赖在环境中的默认版本, 还有找不到依赖等问题.安装底层依赖后添加环境变量要注意区别~/.bashrc、~/.bash_profile、/etc/profile.
+标准的thrift cpp CMakeList.txt文件可以参照这个模版写：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># Licensed to the Apache Software Foundation (ASF) under one</span><br><span class="line"># or more contributor license agreements. See the NOTICE file</span><br><span class="line"># distributed with this work for additional information</span><br><span class="line"># regarding copyright ownership. The ASF licenses this file</span><br><span class="line"># to you under the Apache License, Version 2.0 (the</span><br><span class="line"># &quot;License&quot;); you may not use this file except in compliance</span><br><span class="line"># with the License. You may obtain a copy of the License at</span><br><span class="line">#</span><br><span class="line">#   http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line">#</span><br><span class="line"># Unless required by applicable law or agreed to in writing,</span><br><span class="line"># software distributed under the License is distributed on an</span><br><span class="line"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span><br><span class="line"># KIND, either express or implied. See the License for the</span><br><span class="line"># specific language governing permissions and limitations</span><br><span class="line"># under the License.</span><br><span class="line">#</span><br><span class="line">cmake_minimum_required(VERSION 3.5)</span><br><span class="line"></span><br><span class="line">find_package(Boost REQUIRED)</span><br><span class="line">find_package(Caffe)</span><br><span class="line">set(CMAKE_CXX_STANDARD 11)</span><br><span class="line">set(CMAKE_CXX_FLAGS &quot;-DHAVE_CONFIG_H&quot;)</span><br><span class="line">include_directories($&#123;Boost_INCLUDE_DIRS&#125;)</span><br><span class="line"></span><br><span class="line">#Make sure gen-cpp files can be included</span><br><span class="line">include_directories(</span><br><span class="line">$&#123;Caffe_INCLUDE_DIRS&#125;</span><br><span class="line">/usr/include</span><br><span class="line">/user/local/include</span><br><span class="line">/usr/include/python2.7</span><br><span class="line">/usr/local/cuda/include          )</span><br><span class="line"></span><br><span class="line">link_libraries(</span><br><span class="line">$&#123;Caffe_LIBRARIES&#125;</span><br><span class="line">/usr/local/lib/libopencv_highgui.so</span><br><span class="line">/usr/local/lib/libopencv_imgproc.so</span><br><span class="line">/usr/local/lib/libopencv_imgcodecs.so</span><br><span class="line">/usr/local/lib/libopencv_core.so</span><br><span class="line">/usr/local/lib/libopencv_videoio.so</span><br><span class="line">/usr/local/lib/libopencv_videostab.so</span><br><span class="line">/usr/local/lib/libthrift.so</span><br><span class="line">/usr/lib/x86_64-linux-gnu/libglog.so</span><br><span class="line">/usr/lib/x86_64-linux-gnu/libboost_system.so</span><br><span class="line">/usr/lib/x86_64-linux-gnu/libboost_python.so</span><br><span class="line">/usr/lib/python2.7/config-x86_64-linux-gnu/libpython2.7.so</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">set(tutorialgencpp_SOURCES</span><br><span class="line">echo_constants.cpp</span><br><span class="line">echoRPC.cpp</span><br><span class="line">echo_types.cpp</span><br><span class="line">pose_estimate.cpp</span><br><span class="line">)</span><br><span class="line">add_library(tutorialgencpp STATIC $&#123;tutorialgencpp_SOURCES&#125;)</span><br><span class="line">target_link_libraries(tutorialgencpp thrift)</span><br><span class="line"></span><br><span class="line">add_executable(TutorialServer echo_server.cpp)</span><br><span class="line">target_link_libraries(TutorialServer tutorialgencpp)</span><br><span class="line">target_link_libraries(TutorialServer thrift)</span><br></pre></td></tr></table></figure>
+
+
+中间件服务列表
+lang    rtt    server    port    framework    client    server    model    私有部署客户    公有云客户
+文件分类1.0    python    等嘉文最后测一遍补上    139.196.88.231    4445    caffe    ThriftMiddleware    /situ/xiaos-forTest/RPC-PYserver/server3.py    discarded         
+ocr1.0（通用）    python        139.196.88.231    4447    tf+pytorch    ThriftMiddleware    /situ/tianhao/ocr/CHINESE-OCR/ocrModel.py    ocr/        
+ocr2.0（东风）    python        139.196.88.231    4499    tf    ThriftMiddleware    /situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py    ctpn/    东风    
+ocr3.0（东风）    python        139.196.88.231    4499    tf    ThriftMiddleware    /situ/tianhao/ocr/crnn_cpu_fast/ocr2Model.py    ctpn/    东风    
+文件分类2.0    python        139.196.88.231    4498    tf    ThriftMiddleware    /situ/xiaos-forTest/project-19/ImageCategory2.py    doc19/        
+文件分类3.0 (others)    python        139.196.88.231    4500    tf    ThriftMiddleware    /situ/wendong/Yolo3_k_a/others.py    yolo3/    东风    
+表情识别    python        139.196.88.231    4446    caffe    ThriftMiddleware    /situ/EmoRServer/emoRServer.py    ../x        
+人脸抠图    python        47.100.27.180:80    4497    caffe    ThriftMiddleware    /root/FacePhotoServer/FacePhotoServer.py    ./model    中银、长安新生    
+人脸抠图(宝马)    python        47.100.27.180:80    4444    caffe    ThriftMiddleware    /root/FacePhotoBMWServer/FacePhotoBMWServer.py    ./model    宝马    
+二维码    java            -                        
+姿态识别    cpp        47.100.27.180:80    4989    caffe    ThriftMiddleware    /root/poseServer/server/PoseServer    ../models        
+高兴程度    python        139.196.88.231    4448    Caffe    ThriftMiddleware    /situ/xiaos-forTest/happy_detection/happyServer.py    ./model        
+人脸抠图(General)    cpp        47.100.27.180:80    4496    caffe    ThriftMiddleware    /root/general_face_cxx    ./model        
+</code></pre>
           
         
       
@@ -432,6 +467,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>
